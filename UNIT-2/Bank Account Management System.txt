@@ -1,0 +1,103 @@
+import java.util.Scanner;
+
+class BankAccount {
+
+    private String accId;
+    private String holder;
+    private String branch;
+    private double currentAmount;
+
+    public void setAccId(String accId) {
+        this.accId = accId;
+    }
+
+    public void setHolder(String holder) {
+        this.holder = holder;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public void setCurrentAmount(double currentAmount) {
+        if (currentAmount >= 0) {
+            this.currentAmount = currentAmount;
+        } else {
+            this.currentAmount = 0;
+        }
+    }
+
+    public String getAccId() {
+        return accId;
+    }
+
+    public String getHolder() {
+        return holder;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public double getCurrentAmount() {
+        return currentAmount;
+    }
+
+    public void showDetails() {
+        System.out.println("\n--- Account Information ---");
+        System.out.println("Account ID      : " + accId);
+        System.out.println("Account Holder  : " + holder);
+        System.out.println("Branch Name     : " + branch);
+        System.out.println("Balance         : " + currentAmount);
+    }
+
+    public void addMoney(double amt) {
+        if (amt > 0) {
+            currentAmount += amt;
+            System.out.println("Deposit successful");
+        } else {
+            System.out.println("Invalid deposit amount");
+        }
+    }
+
+    public void takeMoney(double amt) {
+        if (amt > 0 && amt <= currentAmount) {
+            currentAmount -= amt;
+            System.out.println("Withdrawal successful");
+        } else {
+            System.out.println("Invalid withdrawal amount");
+        }
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        BankAccount acc = new BankAccount();
+
+        System.out.print("Enter Account ID: ");
+        acc.setAccId(sc.nextLine());
+
+        System.out.print("Enter Account Holder Name: ");
+        acc.setHolder(sc.nextLine());
+
+        System.out.print("Enter Branch Name: ");
+        acc.setBranch(sc.nextLine());
+
+        System.out.print("Enter Initial Amount: ");
+        acc.setCurrentAmount(sc.nextDouble());
+
+        acc.showDetails();
+
+        System.out.print("\nEnter amount to deposit: ");
+        acc.addMoney(sc.nextDouble());
+
+        System.out.print("Enter amount to withdraw: ");
+        acc.takeMoney(sc.nextDouble());
+
+        acc.showDetails();
+
+        sc.close();
+    }
+}
