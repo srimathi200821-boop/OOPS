@@ -1,0 +1,43 @@
+import java.io.*; 
+import java.util.*; 
+class InsufficientBalanceException  extends Exception{ 
+    public InsufficientBalanceException(String s){ 
+        super(s); 
+    } 
+} 
+public class Solution{ 
+    public static void main(String[] args){ 
+        Scanner sc= new Scanner(System.in); 
+        System.out.println("Enter the account balance: "); 
+        double balance=sc.nextDouble(); 
+        System.out.println("1.Deposit"); 
+        System.out.println("2.withdraw"); 
+        System.out.println("Enter your choice: "); 
+        int choice = sc.nextInt(); 
+        try{ 
+            if(choice==1){ 
+                System.out.println("Enter deposit amount: "); 
+                double deposit=sc.nextDouble(); 
+                balance=balance+deposit; 
+                System.out.printf("Deposit successful. Current balance: Rs.%.2f", balance); 
+            } 
+            else if(choice==2){ 
+                System.out.println("Enter amount to withdraw:"); 
+                double withdraw=sc.nextDouble(); 
+             if(balance-withdraw<1000){ 
+                 throw new InsufficientBalanceException("Error: Withdrawal denied. Minimum balance of 
+Rs.1000 must be maintained."); 
+             } 
+              balance=balance-withdraw; 
+              System.out.printf("Withdrawal successful. Remaining balance: Rs.%.2f", balance); 
+            } 
+            else{ 
+                System.out.println("Invalid choice"); 
+            } 
+             
+        } 
+        catch(InsufficientBalanceException e){ 
+            System.out.println(e.getMessage()); 
+        } 
+    } 
+} 

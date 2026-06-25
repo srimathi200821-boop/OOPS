@@ -1,0 +1,106 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+
+interface MessageService {
+    void sendMessage(String msg);
+}
+
+
+class Message {
+    private String content;
+
+    public Message(String content) {
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
+    }
+}
+
+
+class ChatThread extends Thread {
+    private JTextArea chatArea;
+    private String message;
+
+    public ChatThread(JTextArea chatArea, String message) {
+        this.chatArea = chatArea;
+        this.message = message;
+    }
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(500); 
+            chatArea.append("Friend: " + message + "\n");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+class ChatService implements MessageService {
+    private JTextArea chatArea;
+
+    public ChatService(JTextArea chatArea) {
+        this.chatArea = chatArea;
+    }
+
+    @Override
+    public void sendMessage(String msg) {
+        Message message = new Message(msg);
+
+        
+        chatArea.append("You: " + message.getContent() + "\n");
+
+        
+        ChatThread thread = new ChatThread(chatArea, "Reply to: " + msg);
+        thread.start();
+    }
+}
+
+public class ChatAppGUI extends JFrame {
+
+    private JTextArea chatArea;
+    private JTextField inputField;
+    private JButton sendButton;
+
+    public ChatAppGUI() {
+        setTitle("Chat App");
+        setSize(400, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        chatArea = new JTextArea();
+        chatArea.setEditable(false);
+
+        inputField = new JTextField(20);
+        sendButton = new JButton("Send");
+
+        JPanel panel = new JPanel();
+        panel.add(inputField);
+        panel.add(sendButton);
+
+        add(new JScrollPane(chatArea), BorderLayout.CENTER);
+        add(panel, BorderLayout.SOUTH);
+
+        
+        MessageService service = new ChatService(chatArea);
+
+        sendButton.addActionListener(e -> {
+            String text = inputField.getText();
+            if (!text.isEmpty()) {
+                service.sendMessage(text);
+                inputField.setText("");
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new ChatAppGUI().setVisible(true);
+        });
+    }
+}
