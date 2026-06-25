@@ -1,0 +1,133 @@
+import java.util.*; 
+class Course { 
+int id; 
+String name; 
+Course(int id, String name) { 
+this.id = id; 
+this.name = name; 
+} 
+void display() { 
+System.out.println(id + " - " + name); 
+} 
+} 
+class Student { 
+int id; 
+String name; 
+List<Course> courses = new ArrayList<>(); 
+Student(int id, String name) { 
+this.id = id; 
+this.name = name; 
+} 
+void enroll(Course c) { 
+for (Course course : courses) { 
+if (course.id == c.id) { 
+System.out.println("Already enrolled in this course!"); 
+                return; 
+            } 
+        } 
+        courses.add(c); 
+        System.out.println("Enrolled in " + c.name); 
+    } 
+    void display() { 
+        System.out.println("\nStudent ID: " + id); 
+        System.out.println("Name: " + name); 
+        System.out.println("Courses Enrolled:"); 
+        if (courses.isEmpty()) { 
+            System.out.println("  No courses enrolled"); 
+        } else { 
+            for (Course c : courses) { 
+                System.out.println("  - " + c.name); 
+            } 
+        } 
+    } 
+} 
+public class StudentCourseSystem { 
+    public static void main(String[] args) { 
+        Scanner sc = new Scanner(System.in); 
+        List<Student> students = new ArrayList<>(); 
+        List<Course> courses = new ArrayList<>(); 
+        courses.add(new Course(1, "Java")); 
+        courses.add(new Course(2, "Data Structures")); 
+        courses.add(new Course(3, "Database Systems")); 
+        int choice; 
+        do { 
+            System.out.println("\n===== MENU ====="); 
+            System.out.println("1. Add Student"); 
+            System.out.println("2. View Courses"); 
+            System.out.println("3. Enroll Student"); 
+            System.out.println("4. View Students"); 
+            System.out.println("5. Search Student"); 
+            System.out.println("6. Exit"); 
+            System.out.print("Enter choice: "); 
+            choice = sc.nextInt(); 
+            switch (choice) { 
+                case 1: 
+                    System.out.print("Enter Student ID: "); 
+                    int id = sc.nextInt(); 
+                    sc.nextLine(); 
+                    System.out.print("Enter Name: "); 
+                    String name = sc.nextLine(); 
+                    students.add(new Student(id, name)); 
+                    System.out.println("Student Added!"); 
+                    break; 
+                case 2: 
+                    System.out.println("\nAvailable Courses:"); 
+                    for (Course c : courses) { 
+                        c.display(); 
+                    } 
+                    break; 
+                case 3: 
+                    System.out.print("Enter Student ID: "); 
+                    int sid = sc.nextInt(); 
+                    System.out.print("Enter Course ID: "); 
+                    int cid = sc.nextInt(); 
+                    boolean studentFound = false, courseFound = false; 
+                    for (Student s : students) { 
+                        if (s.id == sid) { 
+                            studentFound = true; 
+                            for (Course c : courses) { 
+                                if (c.id == cid) { 
+                                    courseFound = true; 
+                                    s.enroll(c); 
+                                } 
+                            } 
+                        } 
+                    } 
+                    if (!studentFound) 
+                        System.out.println("Student not found!"); 
+                    else if (!courseFound) 
+                        System.out.println("Course not found!"); 
+                    break; 
+                case 4: 
+                    if (students.isEmpty()) { 
+                        System.out.println("No students available!"); 
+                    } else { 
+                        for (Student s : students) { 
+                            s.display(); 
+                        } 
+                    } 
+                    break; 
+                case 5: 
+                    System.out.print("Enter Student ID to search: "); 
+                    int searchId = sc.nextInt(); 
+                    boolean found = false; 
+                    for (Student s : students) { 
+                        if (s.id == searchId) { 
+                            s.display(); 
+                            found = true; 
+                        } 
+                    } 
+                    if (!found) { 
+                        System.out.println("Student not found!"); 
+                    } 
+                    break; 
+case 6: 
+System.out.println("Exiting..."); 
+break; 
+default: 
+System.out.println("Invalid choice!"); 
+} 
+} while (choice != 6); 
+sc.close(); 
+} 
+}
