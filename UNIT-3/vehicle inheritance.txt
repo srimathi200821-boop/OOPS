@@ -1,0 +1,70 @@
+import java.util.*;
+class Vehicle{
+    String make;
+    String model;
+    int year;
+    Vehicle(String make,String model,int year){
+        this.make=make;
+        this.model=model;
+        this.year=year;
+    }
+    void displayVehicledetails(){
+        System.out.println("Vehicle Details:");
+        System.out.println("Make: " +make);
+        System.out.println("Model: " +model);
+        System.out.println("Year: " +year);
+    }
+}
+class Car extends Vehicle{
+    int numberOfDoors;
+    Car(String make,String model,int year,int numberOfDoors){
+        super(make,model,year);
+        this.numberOfDoors=numberOfDoors;
+    }
+    void displayCardetails(){
+        System.out.println("Car Details:");
+        System.out.println("NumberOfDoors: " +numberOfDoors);
+    }
+}
+class Bike extends Vehicle{
+     int engineCapacity;
+     Bike(String make,String model,int year,int engineCapacity){
+         super(make,model,year);
+         this.engineCapacity=engineCapacity;
+     }
+     void displayBikedetails(){
+         System.out.println("Bike Details:");
+         System.out.println("EngineCapacity: " +engineCapacity);
+     }
+}
+public class Solution{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        
+        System.out.println("Enter the make of the vehicle:");
+        String make=sc.nextLine();
+        System.out.println("Enter the model of the vehicle:");
+        String model=sc.nextLine();
+        System.out.println("Enter the Year:");
+        int year=sc.nextInt();
+        int choice=sc.nextInt();
+        sc.nextLine();
+        if(choice==1){
+            System.out.println("Enter the NumberOfDoors: ");
+            int numberOfDoors=sc.nextInt();
+            Car c=new Car(make,model,year,numberOfDoors);
+            c.displayVehicledetails();
+            c.displayCardetails();
+        }
+        else if(choice==2){
+            System.out.println("Enter the EngineCapacity:");
+            int engineCapacity=sc.nextInt();
+            Bike b=new Bike(make,model,year,engineCapacity);
+            b.displayVehicledetails();
+            b.displayBikedetails();
+        }
+        else{
+            System.out.println("Invalid choice");
+        }
+    }
+}

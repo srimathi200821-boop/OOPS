@@ -1,0 +1,54 @@
+import java.util.*;
+class Hospital{
+    void calculateBill(int consultationFee){
+        System.out.println("General Checkup Bill: ");
+        System.out.println("Total Bill: " +consultationFee);
+    }
+    void calculateBill(int days,int Roomcharge){
+        int total=days*Roomcharge;
+        System.out.println("Patient Bill:");
+        System.out.println("Total Bill: " +total);
+    }
+    void calculateBill(int surgeryCharge, int medicineCharge, int doctorFee) { 
+        int total = surgeryCharge + medicineCharge + doctorFee; 
+        System.out.println("Surgery Patient Bill"); 
+        System.out.println("Total Bill: " + total); 
+    }
+}
+public class Solution{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        Hospital h=new Hospital();
+        System.out.println("Welcome to Hospital Management System"); 
+        System.out.println("1. General Checkup"); 
+        System.out.println("2. In-Patient"); 
+        System.out.println("3. Surgery Patient");
+        System.out.print("Enter your choice (1-3): ");
+        int choice=sc.nextInt();
+        sc.nextLine();
+        if(choice==1){
+            System.out.println("Enter ConsultationFee: ");
+            int consultationfee=sc.nextInt();
+            h.calculateBill(consultationfee);
+        }
+        else if(choice==2){
+            System.out.println("Enter Number of Days: ");
+            int days=sc.nextInt();
+            System.out.println("Enter the Roomcharge: ");
+            int roomcharge=sc.nextInt();
+            h.calculateBill(days,roomcharge);
+        }
+        else if(choice==3){
+            System.out.println("Enter the Surgerycharge: ");
+            int surgerycharge=sc.nextInt();
+            System.out.println("Enter the Medicinecharge: ");
+            int medicinecharge=sc.nextInt();
+            System.out.println("Enter the DoctorFee: ");
+            int doctorfee=sc.nextInt();
+            h.calculateBill(surgerycharge, medicinecharge,doctorfee);
+        }
+        else{
+            System.out.println("Invalid choice");
+        }
+    }
+}
